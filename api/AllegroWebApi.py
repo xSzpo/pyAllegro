@@ -36,7 +36,7 @@ class AllegroWebApi():
     """
 
     def __init__(self,
-                 credentialsFilePath='../credentials/credentials.json',
+                 credentialsFilePath='../credentials/allegro_credentials_webapi.json',
                  appNameField='nazwaAplikacji',
                  clientIdField='clientId',
                  clientSecredField='clientSecred',
@@ -62,7 +62,7 @@ class AllegroWebApi():
 
         except AssertionError:
             raise Exception('Path {} doesn\'exist'.format(
-                                                self.credentialsFilePath))
+                                                file_path))
 
         except Exception as e:
             print(e)
