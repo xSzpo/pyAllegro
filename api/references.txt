@@ -1,0 +1,2 @@
+https://cwsi.pl/ecommerce/allegro/podstawy-obslugi-web-api-allegro-pl-web-services-i-modul-suds-jurko-w-pythonie	 web_api - tutorial
+https://allegro.pl/webapi/general.php	 web api - opis allegro
