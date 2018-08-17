@@ -76,7 +76,7 @@ class AllegroWebApi():
                             "redirectUri": self.redirect
                         })
 
-    def web_api_start_sesion(self):
+    def start_sesion(self):
         self.Client = Client(
                 'https://webapi.allegro.pl/service.php?wsdl')
         self.Response = self.Client.service.doQueryAllSysStatus(
@@ -142,7 +142,7 @@ class AllegroWebApi():
             raise Exception('You should provide userId or userLogin')
 
 """
-WebApi.web_api_start_sesion()
+WebApi.start_sesion()
 WebApi.doGetMyData()
 WebApi.doGetUserID(userLogin='nicke1')
 WebApi.doGetUserLogin(userId=1091465)

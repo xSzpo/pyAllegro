@@ -28,6 +28,7 @@ import os
 
 os.chdir('/Users/xszpo/Google Drive/DataScience/Projects/201808_allegro')
 credentialsFilePath = '../credentials/allegro_credentials_rest.json'
+tokenFilePath = '../credentials/allegro_rest_token.json'
 
 
 class AllegroRestApi():
@@ -36,15 +37,19 @@ class AllegroRestApi():
     """
 
     def __init__(self,
-                 credentialsFilePath='../credentials/allegro_credentials_rest.json',
+                 credentialsFilePath='../credentials/allegro_credentials'
+                                     '_rest.json',
+                 tokenFilePath='../credentials/allegro_rest_token.json',
                  appNameField='nazwaAplikacji',
                  clientIdField='clientId',
                  clientSecredField='clientSecred',
                  redirectField='redirect',
                  DEFAULT_OAUTH_URL='https://allegro.pl/auth/oauth',
-                 DEFAULT_REDIRECT_URI='http://localhost:8000'
+                 DEFAULT_REDIRECT_URI='http://localhost:8000',
+                 DEFAULT_API_URL = 'https://api.allegro.pl'
                  ):
         self.credentialsFilePath = credentialsFilePath
+        self.tokenFilePath = tokenFilePath
         self.Credentials = self.__load_credentials(self.credentialsFilePath)
         self.appName = self.Credentials[appNameField]
         self.clientId = self.Credentials[clientIdField]
@@ -52,6 +57,7 @@ class AllegroRestApi():
         self.redirect = self.Credentials[redirectField]
         self.DEFAULT_OAUTH_URL = DEFAULT_OAUTH_URL
         self.DEFAULT_REDIRECT_URI = DEFAULT_REDIRECT_URI
+        self.DEFAULT_API_URL = DEFAULT_API_URL
 
     def rest_api_help(self):
         return webbrowser.open('https://developer.allegro.pl/')
@@ -150,7 +156,23 @@ class AllegroRestApi():
 
         return response.json()
 
-    def web_api_start_sesion(self):
+    def __refresh_token(self,client_id, client_secret, refresh_token, 
+                        redirect_uri, oauth_url):
+
+        token_url = oauth_url + '/token'
+
+        access_token_data = {'grant_type': 'refresh_token',
+                             'refresh_token': refresh_token,
+                             'redirect_uri': redirect_uri}
+
+        response = requests.post(url=token_url,
+                                 auth=requests.auth.HTTPBasicAuth(
+                                         client_id, client_secret),
+                                 data=access_token_data)
+
+        return response.json()
+
+    def get_token(self, writeDownToken=True):
         access_code = self.__get_access_code(
                 client_id=self.clientId,
                 redirect_uri=self.DEFAULT_REDIRECT_URI,
@@ -162,12 +184,77 @@ class AllegroRestApi():
                 access_code=access_code,
                 redirect_uri=self.DEFAULT_REDIRECT_URI,
                 oauth_url=self.DEFAULT_OAUTH_URL)
+
+        if writeDownToken:
+            with open(self.tokenFilePath, 'w') as file:
+                json.dump(self.Authorization, file)
+
         pass
 
+    def load_token(self):
 
-RestApi = AllegroRestApi(credentialsFilePath=credentialsFilePath)
-RestApi.web_api_start_sesion()
+        with open(self.tokenFilePath, 'r') as file:
+            self.Authorization = json.load(file)
+
+        pass
+
+    def refresh_token(self, if_load_token=True, writeDownToken=True):
+
+        if if_load_token:
+            self.load_token()
+
+        self.Authorization = self.__refresh_token(
+                client_id=self.clientId,
+                client_secret=self.clientSecred,
+                refresh_token=self.Authorization['refresh_token'],
+                redirect_uri=self.DEFAULT_REDIRECT_URI,
+                oauth_url=self.DEFAULT_OAUTH_URL)
+
+        if writeDownToken:
+            with open(self.tokenFilePath, 'w') as file:
+                json.dump(self.Authorization, file)
+
+        pass
+
+    def call_resource(self, resource_name, params):
+
+        headers = {
+                'charset': 'utf-8',
+                'Accept-Language': 'pl-PL',
+                'Content-Type': 'application/json',
+                'Accept': 'application/vnd.allegro.public.v1+json',
+                'Authorization': "Bearer {}".format(
+                        self.Authorization['access_token'])
+                }
+
+        with requests.Session() as session:
+            session.headers.update(headers)
+            response = session.get(self.DEFAULT_API_URL +
+                                   resource_name,
+                                   params=params)
+            print(response.json())
+
+
+RestApi = AllegroRestApi(credentialsFilePath=credentialsFilePath,
+                         tokenFilePath=tokenFilePath)
+
+RestApi.get_token(writeDownToken=True)
+RestApi.load_token()
+RestApi.refresh_token(if_load_token=True, writeDownToken=True)
+
 RestApi.Authorization
 
+RestApi.call_resource(
+        resource_name='/after-sales-service-conditions/warranties',
+        params={'sellerId': '1091465'}
+        )
 
-#/users/{userId}/ratings-summary
+RestApi.call_resource(
+        resource_name='/users/1091465/ratings-summary',
+        params={'sellerId': '1091465'}
+        )
+
+RestApi.call_resource(
+        resource_name='/sale/user-ratings',
+        params={'user.id': '1091465', 'limit':100}
+        )
