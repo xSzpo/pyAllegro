@@ -232,7 +232,7 @@ class AllegroRestApi():
             response = session.get(self.DEFAULT_API_URL +
                                    resource_name,
                                    params=params)
-            print(response.json())
+            return response.json()
 
 
 RestApi = AllegroRestApi(credentialsFilePath=credentialsFilePath,
@@ -250,11 +250,20 @@ RestApi.call_resource(
         )
 
 RestApi.call_resource(
-        resource_name='/users/1091465/ratings-summary',
-        params={'sellerId': '1091465'}
+        resource_name='/users/41952603/ratings-summary',
+        params={}
         )
 
 RestApi.call_resource(
         resource_name='/sale/user-ratings',
         params={'user.id': '1091465', 'limit':100}
         )
+
+
+plik_json = RestApi.call_resource(
+        resource_name='/offers/listing',
+        params={'phrase': 'samsung'}
+        )
+
+with open('plik_json.json','w') as file:
+    json.dump(plik_json,file)
