@@ -1,6 +1,11 @@
 # allegro-api
 
 The aim of this project is to create a python package to easily collect information about ofers and sellers through allegro API.      
+
+Tutorial:
+* [RestApi](https://github.com/xSzpo/allegro/blob/master/tutorial_AllegroRestApi.ipynb)
+* [WebApi](https://github.com/xSzpo/allegro/blob/master/tutorial_allegroWebApi.ipynb0
+
     
 Allegro api documentation:    
 * [Rest Api](https://developer.allegro.pl/documentation/)    
