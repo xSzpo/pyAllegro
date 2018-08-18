@@ -129,7 +129,7 @@ class AllegroRestApi():
         _access_code = httpd.access_code
 
         # Dla jasności co się dzieje - wyświetlamy go na ekranie
-        print('Got an authorize code: ', _access_code)
+        print('Got an authorize code') # , _access_code
 
         # i zwracamy jako rezultat działania naszej funkcji
         return _access_code
@@ -210,6 +210,10 @@ class AllegroRestApi():
         return webbrowser.open('https://developer.allegro.pl/')
 
     def get_token(self, writeDownToken=True):
+
+        if not hasattr(self, 'Credentials'):
+            self.__credentials_read()
+
         access_code = self.__get_access_code(
                 client_id=self.Credentials['clientId'],
                 redirect_uri=self.Credentials['DEFAULT_REDIRECT_URI'],
@@ -282,6 +286,7 @@ class AllegroRestApi():
                 print("Error code {}".format(str(response.status_code)))
 
 
+"""
 RestApi = AllegroRestApi()
 
 RestApi.credentials_set(
@@ -320,3 +325,4 @@ RestApi.resource_get(
         resource_name='/offers/listing',
         params={'phrase': 'samsung'}
         )
+"""
