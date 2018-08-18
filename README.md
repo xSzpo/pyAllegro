@@ -4,7 +4,7 @@ The aim of this project is to create a python package to easily collect informat
 
 Tutorial:
 * [RestApi](https://github.com/xSzpo/allegro/blob/master/tutorial_AllegroRestApi.ipynb)
-* [WebApi](https://github.com/xSzpo/allegro/blob/master/tutorial_allegroWebApi.ipynb0
+* [WebApi](https://github.com/xSzpo/allegro/blob/master/tutorial_allegroWebApi.ipynb)
 
     
 Allegro api documentation:    
