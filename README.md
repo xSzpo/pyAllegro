@@ -6,7 +6,7 @@ Allegro api documentation:
 * [Rest Api](https://developer.allegro.pl/documentation/)    
 * [Web Api](https://allegro.pl/webapi/documentation.php)
 
-My tutorials:
+How to use allegro-api package:
 * [RestApi](https://github.com/xSzpo/allegro/blob/master/tutorial_AllegroRestApi.ipynb)
 * [WebApi](https://github.com/xSzpo/allegro/blob/master/tutorial_allegroWebApi.ipynb)
 
