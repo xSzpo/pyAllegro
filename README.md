@@ -8,9 +8,8 @@ Allegro api documentation:
 
 How to use allegro-api package:
 * [RestApi](https://github.com/xSzpo/allegro/blob/master/tutorial_AllegroRestApi.ipynb)
-* [WebApi](https://github.com/xSzpo/allegro/blob/master/tutorial_allegroWebApi.ipynb)
+* [WebApi](https://github.com/xSzpo/allegro/blob/master/tutorial_AllegroWebApi.ipynb)
 
 References:    
 * [Rest Api tutorial](https://cwsi.pl/ecommerce/allegro/allegro-pl-rest-api-w-pythonie-wprowadzenie/)    
 * [Web Api tutorial](https://cwsi.pl/ecommerce/allegro/podstawy-obslugi-web-api-allegro-pl-web-services-i-modul-suds-jurko-w-pythonie)    
-
