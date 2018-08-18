@@ -26,10 +26,6 @@ import webbrowser
 import json
 import os
 
-os.chdir('/Users/xszpo/Google Drive/DataScience/Projects/201808_allegro')
-credentialsFilePath = '../credentials/allegro_credentials_rest.json'
-tokenFilePath = '../credentials/allegro_rest_token.json'
-
 
 class AllegroRestApi():
     """
@@ -37,47 +33,45 @@ class AllegroRestApi():
     """
 
     def __init__(self,
-                 credentialsFilePath='../credentials/allegro_credentials'
-                                     '_rest.json',
-                 tokenFilePath='../credentials/allegro_rest_token.json',
-                 appNameField='nazwaAplikacji',
-                 clientIdField='clientId',
-                 clientSecredField='clientSecred',
-                 redirectField='redirect',
-                 DEFAULT_OAUTH_URL='https://allegro.pl/auth/oauth',
-                 DEFAULT_REDIRECT_URI='http://localhost:8000',
-                 DEFAULT_API_URL = 'https://api.allegro.pl'
+                 config_file_dir=os.path.join(
+                         os.path.expanduser("~"), '.allegroApiConfig')
                  ):
-        self.credentialsFilePath = credentialsFilePath
-        self.tokenFilePath = tokenFilePath
-        self.Credentials = self.__load_credentials(self.credentialsFilePath)
-        self.appName = self.Credentials[appNameField]
-        self.clientId = self.Credentials[clientIdField]
-        self.clientSecred = self.Credentials[clientSecredField]
-        self.redirect = self.Credentials[redirectField]
-        self.DEFAULT_OAUTH_URL = DEFAULT_OAUTH_URL
-        self.DEFAULT_REDIRECT_URI = DEFAULT_REDIRECT_URI
-        self.DEFAULT_API_URL = DEFAULT_API_URL
+        self.config_file_dir = config_file_dir
 
-    def rest_api_help(self):
-        return webbrowser.open('https://developer.allegro.pl/')
+        """jezeli folder config nie istnieje - utworz go"""
+        if not os.path.exists(config_file_dir):
+            os.makedirs(config_file_dir)
 
-    def __load_credentials(self, file_path: str = 'credentials.json'):
-        try:
-            assert os.path.exists(file_path)
-            with open(file_path, 'r') as file:
-                credentials = file.readlines()
+        """jezeli folder config nie istnieje - zatrzymaj program"""
+        if not os.path.exists(config_file_dir):
+            raise AssertionError("directory {} does not exists".
+                                 format(config_file_dir))
 
-            credentials = json.loads(" ".join(credentials))
-            return credentials
+    def __credentials_read(self):
+        with open(os.path.join(self.config_file_dir,
+                               "allegro_credentials_rest.json"), 'r') as file:
+            self.Credentials = json.load(file)
 
-        except AssertionError:
-            raise Exception('Path {} doesn\'exist'.format(
-                                                file_path))
+        pass
 
-        except Exception as e:
-            print(e)
-            raise
+    def __credentials_write(self):
+        with open(os.path.join(self.config_file_dir,
+                               "allegro_credentials_rest.json"), 'w') as file:
+            json.dump(self.Credentials, file)
+
+        pass
+
+    def __token_read(self):
+        with open(os.path.join(self.config_file_dir,
+                               "allegro_rest_token.json"), 'r') as file:
+            self.Authorization = json.load(file)
+
+        pass
+
+    def __token_write(self):
+        with open(os.path.join(self.config_file_dir,
+                               "allegro_rest_token.json"), 'w') as file:
+            json.dump(self.Authorization, file)
 
     def __get_access_code(self, client_id, redirect_uri, oauth_url):
 
@@ -156,7 +150,7 @@ class AllegroRestApi():
 
         return response.json()
 
-    def __refresh_token(self,client_id, client_secret, refresh_token, 
+    def __refresh_token(self, client_id, client_secret, refresh_token,
                         redirect_uri, oauth_url):
 
         token_url = oauth_url + '/token'
@@ -172,51 +166,100 @@ class AllegroRestApi():
 
         return response.json()
 
+    def credentials_set(self,
+                        appName,
+                        clientId,
+                        clientSecred,
+                        redirectUrl="http://localhost:8000",
+                        DEFAULT_OAUTH_URL="https://allegro.pl/auth/oauth",
+                        DEFAULT_REDIRECT_URI="http://localhost:8000",
+                        DEFAULT_API_URL="https://api.allegro.pl"
+                        ):
+        self.Credentials = {
+                "appName": appName,
+                "clientId": clientId,
+                "clientSecred": clientSecred,
+                "redirectUrl": redirectUrl,
+                "DEFAULT_OAUTH_URL": DEFAULT_OAUTH_URL,
+                "DEFAULT_REDIRECT_URI": DEFAULT_REDIRECT_URI,
+                "DEFAULT_API_URL": DEFAULT_API_URL,
+                }
+
+        if self.Credentials["redirectUrl"] != self.Credentials["DEFAULT_"
+                                                               "REDIRECT_URI"]:
+            raise ValueError('redirectUrl sholud be the same as'
+                             'DEFAULT_REDIRECT_URI')
+
+        self.__credentials_write()
+
+        pass
+
+    def credentials_load(self):
+        self.__credentials_read()
+
+        pass
+
+    def credentials_field_set(self, key, value, ifWriteToFile=True):
+
+        self.Credentials[key] = value
+
+        if ifWriteToFile:
+            self.__credentials_write()
+
+    def rest_api_help(self):
+        return webbrowser.open('https://developer.allegro.pl/')
+
     def get_token(self, writeDownToken=True):
         access_code = self.__get_access_code(
-                client_id=self.clientId,
-                redirect_uri=self.DEFAULT_REDIRECT_URI,
-                oauth_url=self.DEFAULT_OAUTH_URL)
+                client_id=self.Credentials['clientId'],
+                redirect_uri=self.Credentials['DEFAULT_REDIRECT_URI'],
+                oauth_url=self.Credentials['DEFAULT_OAUTH_URL'])
 
         self.Authorization = self.__sign_in(
-                client_id=self.clientId,
-                client_secret=self.clientSecred,
+                client_id=self.Credentials['clientId'],
+                client_secret=self.Credentials['clientSecred'],
                 access_code=access_code,
-                redirect_uri=self.DEFAULT_REDIRECT_URI,
-                oauth_url=self.DEFAULT_OAUTH_URL)
+                redirect_uri=self.Credentials['DEFAULT_REDIRECT_URI'],
+                oauth_url=self.Credentials['DEFAULT_OAUTH_URL'])
 
         if writeDownToken:
-            with open(self.tokenFilePath, 'w') as file:
-                json.dump(self.Authorization, file)
+            self.__token_write()
 
         pass
 
     def load_token(self):
 
-        with open(self.tokenFilePath, 'r') as file:
-            self.Authorization = json.load(file)
+        if not hasattr(self, 'Credentials'):
+            self.__credentials_read()
+
+        self.__token_read()
 
         pass
 
-    def refresh_token(self, if_load_token=True, writeDownToken=True):
+    def refresh_token(self, writeDownToken=True, if_load_token=True,):
+
+        if not hasattr(self, 'Credentials'):
+            self.__credentials_read()
+
+        if not hasattr(self, 'Authorization'):
+            self.__credentials_read()
 
         if if_load_token:
-            self.load_token()
+            self.__token_read()
 
         self.Authorization = self.__refresh_token(
-                client_id=self.clientId,
-                client_secret=self.clientSecred,
+                client_id=self.Credentials['clientId'],
+                client_secret=self.Credentials['clientSecred'],
                 refresh_token=self.Authorization['refresh_token'],
-                redirect_uri=self.DEFAULT_REDIRECT_URI,
-                oauth_url=self.DEFAULT_OAUTH_URL)
+                redirect_uri=self.Credentials['DEFAULT_REDIRECT_URI'],
+                oauth_url=self.Credentials['DEFAULT_OAUTH_URL'])
 
         if writeDownToken:
-            with open(self.tokenFilePath, 'w') as file:
-                json.dump(self.Authorization, file)
+            self.__token_write()
 
         pass
 
-    def call_resource(self, resource_name, params):
+    def resource_get(self, resource_name, params):
 
         headers = {
                 'charset': 'utf-8',
@@ -229,41 +272,51 @@ class AllegroRestApi():
 
         with requests.Session() as session:
             session.headers.update(headers)
-            response = session.get(self.DEFAULT_API_URL +
+            response = session.get(self.Credentials['DEFAULT_API_URL'] +
                                    resource_name,
                                    params=params)
-            return response.json()
+
+            if response.status_code == 200:
+                return response.json()
+            else:
+                print("Error code {}".format(str(response.status_code)))
 
 
-RestApi = AllegroRestApi(credentialsFilePath=credentialsFilePath,
-                         tokenFilePath=tokenFilePath)
+RestApi = AllegroRestApi()
 
-RestApi.get_token(writeDownToken=True)
-RestApi.load_token()
-RestApi.refresh_token(if_load_token=True, writeDownToken=True)
-
-RestApi.Authorization
-
-RestApi.call_resource(
-        resource_name='/after-sales-service-conditions/warranties',
-        params={'sellerId': '1091465'}
+RestApi.credentials_set(
+        appName='xszpo_rest',
+        clientId='5b28dba1eb26446db2f2834e3354346e',
+        clientSecred='HByQO2Em9QP8YnRS9iDf6g4iN66fRLiEV2u'
+                     '7kKpybUjt5qD4yOtpTOWjKuxMITLY',
+        redirectUrl='http://localhost:8000'
         )
 
-RestApi.call_resource(
-        resource_name='/users/41952603/ratings-summary',
+RestApi.credentials_field_set('test', 666, ifWriteToFile=False)
+
+RestApi.get_token()
+
+RestApi.load_token()
+
+RestApi.refresh_token()
+
+RestApi.resource_get(
+        resource_name='/users/{userId}/ratings-summary'.format(
+                **{'userId': 11791190}),
         params={}
         )
 
-RestApi.call_resource(
+RestApi.resource_get(
         resource_name='/sale/user-ratings',
-        params={'user.id': '1091465', 'limit':100}
+        params={'user.id': '11791190', 'limit': 100}
         )
 
+RestApi.resource_get(
+        resource_name='/sale/user-ratings',
+        params={'user.id': '1091465', 'limit': 100}
+        )
 
-plik_json = RestApi.call_resource(
+RestApi.resource_get(
         resource_name='/offers/listing',
         params={'phrase': 'samsung'}
         )
-
-with open('plik_json.json','w') as file:
-    json.dump(plik_json,file)
