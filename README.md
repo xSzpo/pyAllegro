@@ -11,7 +11,7 @@ As for now it's prepared for getting data from allegro - not for managing your a
 2. Generate your app password [here](https://allegro.pl/myaccount/Settings/security_settings.php/applicationPasswords),
 3. Install pyAllegro with ```pip install pyAllegro```
 4. Import ```from pyAllegro.api import AllegroRestApi, AllegroWebApi```
-5. Setup credentials that you recived from allegro:
+5. Setup credentials that you recived from allegro (by default it's saved here: '/Users/{user}/.allegroApiConfig'):
 ```
 RestApi = AllegroRestApi()
 
