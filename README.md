@@ -53,5 +53,5 @@ Thanks to:
 
 ### To do  
 - [ ] RestApi Tutorial
-- [ ] publish pacage on pypi 
+- [ ] publish package on pypi 
 
