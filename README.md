@@ -51,6 +51,8 @@ Thanks to:
 
 
 ### To do  
-- [ ] RestApi Tutorial
 - [ ] publish package on pypi 
+- [ ] RestApi put 
+- [ ] RestApi delete
+- [ ] restApi post
 
