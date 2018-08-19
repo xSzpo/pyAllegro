@@ -37,8 +37,7 @@ RestApi.credentials_set(
 
 ### How to use pyAllegro:
 * [WebApi](https://github.com/xSzpo/pyAllegro/blob/master/tutorial_WebApi.ipynb)
---------- 
-* [RestApi](https://github.com/xSzpo/allegro/blob/master/tutorial_AllegroRestApi.ipynb)
+* [RestApi](https://github.com/xSzpo/pyAllegro/blob/master/tutorial_RestApi.ipynb)
 
 
 ### Allegro api documentation:    
