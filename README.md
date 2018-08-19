@@ -1,7 +1,8 @@
 # allegro-api
 
 pyAllegro is a framework, that provides a simple way to use Allegro [Web API](https://allegro.pl/webapi/general.php) and [Rest AP](https://developer.allegro.pl/about/). You don't need to know how RESTful, SOAP or oauth 2.0 works.    
-As for now its prepared for getting data from allegro - not for managing your account or bidding.   
+<br/>
+As for now it's prepared for getting data from allegro - not for managing your account or bidding.   
 
 
 ### Get started:   
