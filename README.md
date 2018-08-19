@@ -1,8 +1,9 @@
 # allegro-api
 
 The aim of this project is to create a python package to easily collect information about ofers and sellers through allegro APIs.     
-Allegro's providing two APIs: 
-* [Web API[(https://allegro.pl/webapi/general.php)
+<br/>
+Allegro has two APIs, with different scope of methods available: 
+* [Web API](https://allegro.pl/webapi/general.php)
 >Allegro WebAPI to usługa sieciowa opierająca swoje działanie na protokole SOAP, wykorzystująca język XML jako format tworzenia komunikatów oraz protokół RPC do ich przenoszenia pomiędzy klientem (aplikacją), a serwerem WebAPI. Usługa jest w pełni zgodna z obecnie obowiązującymi standardami SOAP.
 >Pełny opis usługi zdefiniowany został za pomocą języka WSDL i znaleźć go można pod adresem (dostępnym wyłącznie za pośrednictwem kanału szyfrowanego): https://webapi.allegro.pl/service.php?wsdl. WSDL kodowany jest w stylu Document/Literal (Wrapped) - zgodnym ze standardami WS-I.
 >Wykorzystanie protokółu RPC determinuje architekturę usługi. Allegro WebAPI składa się z [szeregu metod](https://allegro.pl/webapi/documentation.php?cod=OGZkZlVlNmJk), które stanowią odwzorowanie poszczególnych funkcjonalności serwisu.
