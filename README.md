@@ -4,7 +4,7 @@ pyAllegro is a framework, that provides a simple way to use Allegro [Web API](ht
 As for now its prepared for getting data from allegro - not for managing your account or bidding.   
 
 <br/>
-### Get started:
+### Get started:   
 1. Go to https://apps.developer.allegro.pl/ and register your app. **You need to setup redirecion url to ```http://localhost:8000```** - it will be your local server that recive your autorization data (oauth 2.0),
 2. Generate your app password [here](https://allegro.pl/myaccount/Settings/security_settings.php/applicationPasswords),
 3. Install pyAllegro with ```pip install pyAllegro```
