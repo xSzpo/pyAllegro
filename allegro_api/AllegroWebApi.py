@@ -134,6 +134,9 @@ class AllegroWebApi():
     def web_api_help(self):
         return webbrowser.open('https://allegro.pl/webapi/documentation.php')
 
+    def client_service(self):
+        return self.Client.service
+
     def doGetMyData(self):
         return self.Client.service.doGetMyData(sessionHandle=self.Session)
 
