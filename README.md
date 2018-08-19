@@ -12,8 +12,6 @@ As for now its prepared for getting data from allegro - not for managing your ac
 4. Import ```from pyAllegro.api import AllegroRestApi, AllegroWebApi```
 5. Setup credentials that you recived from allegro:
 ```
-from allegro_api.AllegroRestApi import AllegroRestApi
-
 RestApi = AllegroRestApi()
 #RestApi = AllegroRestApi(config_file_dir='/Users/xszpo/.allegroApiConfig')
 
