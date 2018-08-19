@@ -13,13 +13,15 @@ As for now it's prepared for getting data from allegro - not for managing your a
 4. Import ```from pyAllegro.api import AllegroRestApi, AllegroWebApi```
 5. Setup credentials that you recived from allegro (by default it's saved here: '/Users/{user}/.allegroApiConfig'):
 ```
-RestApi = AllegroRestApi()
+WebApi = AllegroWebApi()
 
-RestApi.credentials_set(
+WebApi.credentials_set(
         appName='<credentials from allegro>',
         clientId='<credentials from allegro>',
         clientSecred='<credentials from allegro>',
-        redirectUrl='http://localhost:8000'
+        userLogin='<allegro login>',
+        redirectUrl='<redirect uri - the same you provided during app registration on allegro >',
+        appPassword='<app password>'
         )
 
 RestApi = AllegroRestApi()
