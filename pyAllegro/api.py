@@ -303,7 +303,7 @@ class AllegroRestApi():
         _access_code = httpd.access_code
 
         # Dla jasności co się dzieje - wyświetlamy go na ekranie
-        print('Got an authorize code') # , _access_code
+        print('Got an authorize code')  # , _access_code
 
         # i zwracamy jako rezultat działania naszej funkcji
         return _access_code
@@ -437,7 +437,7 @@ class AllegroRestApi():
 
         pass
 
-    def resource_get(self, resource_name, params):
+    def resource_get(self, resource_name, params, print_error=True):
 
         headers = {
                 'charset': 'utf-8',
@@ -455,9 +455,11 @@ class AllegroRestApi():
                                    params=params)
 
             if response.status_code == 200:
-                return response.json()
+                return response.status_code, response.json()
             else:
-                print("Error code {}".format(str(response.status_code)))
+                if print_error:
+                    print("Error code {}".format(str(response.status_code)))
+                return response.status_code, json.loads(json.dumps({}))
 
 
 """
