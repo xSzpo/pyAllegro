@@ -35,12 +35,20 @@ RestApi.credentials_set(
 ```
 
 
-
-
-Tutorials:
+### How to use pyAllegro:
+* [WebApi](https://github.com/xSzpo/pyAllegro/blob/master/tutorial_WebApi.ipynb)
+--------- 
 * [RestApi](https://github.com/xSzpo/allegro/blob/master/tutorial_AllegroRestApi.ipynb)
-* [WebApi](https://github.com/xSzpo/allegro/blob/master/tutorial_AllegroWebApi.ipynb)
 
-Allegro api documentation:    
+
+### Allegro api documentation:    
 * [Rest Api](https://developer.allegro.pl/documentation/)    
 * [Web Api](https://allegro.pl/webapi/documentation.php)
+
+### References
+Thanks to: 
+* https://cwsi.pl/ecommerce/allegro/podstawy-obslugi-web-api-allegro-pl-web-services-i-modul-suds-jurko-w-pythonie
+* https://cwsi.pl/ecommerce/allegro/allegro-pl-rest-api-w-pythonie-wprowadzenie/
+
+
+
