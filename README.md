@@ -1,17 +1,16 @@
 # allegro-api
 
-The aim of this project is to create a python package to easily collect information about ofers and sellers through allegro APIs.     
-<br/>
-Allegro has two APIs, with different scope of methods available: 
-* [Web API](https://allegro.pl/webapi/general.php)
->Allegro WebAPI to usługa sieciowa opierająca swoje działanie na protokole SOAP, wykorzystująca język XML jako format tworzenia komunikatów oraz protokół RPC do ich przenoszenia pomiędzy klientem (aplikacją), a serwerem WebAPI. Usługa jest w pełni zgodna z obecnie obowiązującymi standardami SOAP.    
->Pełny opis usługi zdefiniowany został za pomocą języka WSDL i znaleźć go można pod adresem (dostępnym wyłącznie za pośrednictwem kanału szyfrowanego): https://webapi.allegro.pl/service.php?wsdl. WSDL kodowany jest w stylu Document/Literal (Wrapped) - zgodnym ze standardami WS-I.    
->Wykorzystanie protokółu RPC determinuje architekturę usługi. Allegro WebAPI składa się z [szeregu metod](https://allegro.pl/webapi/documentation.php?cod=OGZkZlVlNmJk), które stanowią odwzorowanie poszczególnych funkcjonalności serwisu.
+pyAllegro is a framework, that provides a simple way to use Allegro [Web API](https://allegro.pl/webapi/general.php) and [Rest AP](https://developer.allegro.pl/about/). You don't need to know how RESTful, SOAP or oauth 2.0 works.    
+As for now its prepared for getting data from allegro - not for managing your account or bidding.   
 
-* [Rest AP](https://developer.allegro.pl/about/) 
->Platforma Allegro udostępnia klientom funkcjonalności w ramach API w oparciu o architekturę [REST](https://en.wikipedia.org/wiki/Representational_state_transfer). Wykorzystuje do tego celu protokół HTTP wraz z jego metodami: GET, POST, PUT, DELETE. Elementy platformy Allegro zostały podzielone na zasoby (np. /offers, /users, /categories, itd). Dostęp do poszczególnych zasobów następuje poprzez wywołanie wybranej metody HTTP na adres: https://api.allegro.pl, dodając ścieżkę do wybranego zasobu.    
->Dostęp do API uzyskasz po [zarejestrowaniu](https://apps.developer.allegro.pl/) swojej aplikacji.    
->Wszystkie żądania zasobów REST API wymagają przekazania tokena [OAuth](https://en.wikipedia.org/wiki/OAuth) w nagłówku Authorization. Więcej o autoryzacji za pomocą OAuth przeczytasz w dedykowanym temu tematowi [artykule](https://developer.allegro.pl/auth).
+<br/>
+### Get started:
+1. Go to https://apps.developer.allegro.pl/ and register your app. **You need to setup redirecion url to ```http://localhost:8000```** - it will be your local server that recive your autorization data (oauth 2.0),
+2. Generate your app password [here](https://allegro.pl/myaccount/Settings/security_settings.php/applicationPasswords),
+3. Install pyAllegro with ```pip install pyAllegro```
+
+
+
 
 Tutorials:
 * [RestApi](https://github.com/xSzpo/allegro/blob/master/tutorial_AllegroRestApi.ipynb)
