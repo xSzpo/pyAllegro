@@ -51,4 +51,7 @@ Thanks to:
 * https://cwsi.pl/ecommerce/allegro/allegro-pl-rest-api-w-pythonie-wprowadzenie/
 
 
+### To do  
+- [ ] RestApi Tutorial
+- [ ] publish pacage on pypi 
 
