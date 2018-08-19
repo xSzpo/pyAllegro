@@ -14,7 +14,6 @@ As for now it's prepared for getting data from allegro - not for managing your a
 5. Setup credentials that you recived from allegro:
 ```
 RestApi = AllegroRestApi()
-#RestApi = AllegroRestApi(config_file_dir='/Users/xszpo/.allegroApiConfig')
 
 RestApi.credentials_set(
         appName='<credentials from allegro>',
@@ -24,7 +23,6 @@ RestApi.credentials_set(
         )
 
 RestApi = AllegroRestApi()
-#RestApi = AllegroRestApi(config_file_dir='/Users/xszpo/.allegroApiConfig')
 
 RestApi.credentials_set(
         appName='<credentials from allegro>',
