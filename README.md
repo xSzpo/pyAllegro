@@ -51,7 +51,7 @@ Thanks to:
 
 
 ### To do  
-- [ ] publish package on pypi 
+- [x] publish package on pypi 
 - [ ] RestApi put 
 - [ ] RestApi delete
 - [ ] restApi post
