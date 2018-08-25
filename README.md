@@ -56,3 +56,18 @@ Thanks to:
 - [ ] RestApi delete
 - [ ] restApi post
 
+
+
+
+### Changelog    
+ver. 0.1.0:   
+* automatic token refreshing when expired    
+
+
+
+
+
+
+
+
+

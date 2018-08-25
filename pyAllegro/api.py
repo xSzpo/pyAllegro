@@ -19,7 +19,7 @@ https://www.python.org/dev/peps/pep-0008/
 
 """
 
-
+from datetime import datetime
 from suds.client import Client
 import hashlib
 import base64
@@ -400,6 +400,9 @@ class AllegroRestApi():
                 redirect_uri=self.Credentials['DEFAULT_REDIRECT_URI'],
                 oauth_url=self.Credentials['DEFAULT_OAUTH_URL'])
 
+        self.Authorization["expires_time_sec"] = \
+        		self.Authorization["expires_in"]+datetime.now().timestamp()
+
         if writeDownToken:
             self.__token_write()
 
@@ -411,6 +414,9 @@ class AllegroRestApi():
             self.__credentials_read()
 
         self.__token_read()
+
+        if self.Authorization["expires_time_sec"] < datetime.now().timestamp():
+        	self.refresh_token()
 
         pass
 
@@ -432,12 +438,18 @@ class AllegroRestApi():
                 redirect_uri=self.Credentials['DEFAULT_REDIRECT_URI'],
                 oauth_url=self.Credentials['DEFAULT_OAUTH_URL'])
 
+        self.Authorization["expires_time_sec"] = \
+        		self.Authorization["expires_in"]+datetime.now().timestamp()
+
         if writeDownToken:
             self.__token_write()
 
         pass
 
     def resource_get(self, resource_name, params, print_error=True):
+
+        if self.Authorization["expires_time_sec"] < datetime.now().timestamp():
+        	self.refresh_token()
 
         headers = {
                 'charset': 'utf-8',
