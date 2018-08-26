@@ -21,6 +21,7 @@ https://www.python.org/dev/peps/pep-0008/
 
 from datetime import datetime
 from suds.client import Client
+from suds.sudsobject import asdict
 import hashlib
 import base64
 import webbrowser
@@ -30,6 +31,7 @@ import requests
 from http.server import BaseHTTPRequestHandler
 from http.server import HTTPServer
 import webbrowser
+
 
 class AllegroWebApi():
     """
@@ -178,6 +180,28 @@ class AllegroWebApi():
         else:
             raise Exception('You should provide userId or userLogin')
 
+    def __recursive_dict(self, d):
+        out = {}
+        for k, v in asdict(d).items():
+            if hasattr(v, '__keylist__'):
+                out[k] = self.__recursive_dict(v)
+            elif isinstance(v, list):
+                out[k] = []
+                for item in v:
+                    if hasattr(item, '__keylist__'):
+                        out[k].append(self.__recursive_dict(item))
+                    else:
+                        out[k].append(item)
+            else:
+                out[k] = v
+        return out
+
+    def __myconverter(self, o):
+        if isinstance(o, datetime):
+            return o.__str__()
+        
+    def response2JSON(self, response):
+        return json.loads(json.dumps(self.__recursive_dict(response), default = self.__myconverter))
 
 '''
 WebApi = AllegroWebApi()

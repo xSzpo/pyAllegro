@@ -13,7 +13,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pyAllegro",
-    version="0.2.0",
+    version="0.3.0",
     license = 'MIT',
     author="xSzpo",
     author_email='xszpox@gmail.com',

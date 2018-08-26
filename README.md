@@ -66,6 +66,11 @@ ver. 0.1.0:
 ver. 0.1.1, 0.2.0:   
 * load token automatically in ```RestApi.resource_get()``` method 
 
+ver. 0.3.0:   
+* added ```response2JSON()``` function in WebApi - convert suds response to JSON.   
+
+
+
 
 
 
