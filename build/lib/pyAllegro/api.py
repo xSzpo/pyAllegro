@@ -426,7 +426,7 @@ class AllegroRestApi():
             self.__credentials_read()
 
         if not hasattr(self, 'Authorization'):
-            self.__credentials_read()
+            self.__token_read()
 
         if if_load_token:
             self.__token_read()
@@ -447,6 +447,12 @@ class AllegroRestApi():
         pass
 
     def resource_get(self, resource_name, params, print_error=True):
+
+        if not hasattr(self, 'Credentials'):
+            self.__credentials_read()
+
+        if not hasattr(self, 'Authorization'):
+            self.__token_read()
 
         if self.Authorization["expires_time_sec"] < datetime.now().timestamp():
         	self.refresh_token()

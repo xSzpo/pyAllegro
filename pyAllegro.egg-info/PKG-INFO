@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pyAllegro
-Version: 0.1.0
+Version: 0.2.0
 Summary: pyAllegro is a framework, that provides a simple way to use Allegro Web API and Rest AP. 
 Home-page: https://github.com/xSzpo/pyAllegro
 Author: xSzpo
@@ -69,7 +69,10 @@ Description: # allegro-api
         
         ### Changelog    
         ver. 0.1.0:   
-        * automatic token refreshing when expired    
+        * automatic token refreshing 
+        
+        ver. 0.1.1:   
+        * load token automatically in ```RestApi.resource_get()``` method 
         
         
         
