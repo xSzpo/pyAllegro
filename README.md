@@ -61,7 +61,10 @@ Thanks to:
 
 ### Changelog    
 ver. 0.1.0:   
-* automatic token refreshing when expired    
+* automatic token refreshing 
+
+ver. 0.1.1:   
+* load token automatically in ```RestApi.resource_get()``` method 
 
 
 
