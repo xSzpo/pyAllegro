@@ -63,7 +63,7 @@ Thanks to:
 ver. 0.1.0:   
 * automatic token refreshing 
 
-ver. 0.1.1:   
+ver. 0.1.1, 0.2.0:   
 * load token automatically in ```RestApi.resource_get()``` method 
 
 
